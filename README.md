@@ -4,26 +4,35 @@ Themed completion sounds for [Claude Code](https://claude.ai/code). Plays a rand
 
 ## Themes
 
+### Core
+
 | Command | Theme | Sounds |
 |---------|-------|--------|
 | `peon` | Warcraft Orc worker | "work complete" |
 | `scv` | StarCraft Terran SCV | "good to go sir" |
+
+### Extra (`--all`)
+
+| Command | Theme | Sounds |
+|---------|-------|--------|
 | `marine` | StarCraft Terran Marine | "jacked up and good to go", "outstanding", "ah that's the stuff" |
 | `raynor` | StarCraft Jim Raynor | "any time you're ready", "go ahead commander" |
 | `wraith` | StarCraft Terran Wraith | "awaiting launch orders", "standing by" |
+| `duke` | StarCraft Edmund Duke | "should work", "alright then", "decisive action" |
 
 ## Install
 
 ```bash
 git clone https://github.com/kearnsw/agent-sound-stop-hooks.git
 cd agent-sound-stop-hooks
-bash install.sh
+bash install.sh        # core themes (peon, scv)
+bash install.sh --all  # all themes
 ```
 
 This will:
 - Download sound files to `~/.claude/sounds/`
 - Add a Stop hook to `~/.claude/settings.json`
-- Add `peon`, `scv`, `marine`, `raynor`, and `wraith` shell functions to your `.zshrc` or `.bashrc`
+- Add shell functions to your `.zshrc` or `.bashrc`
 
 ## Usage
 
@@ -35,20 +44,22 @@ scv       # StarCraft SCV completion sounds
 marine    # StarCraft Marine completion sounds
 raynor    # StarCraft Raynor completion sounds
 wraith    # StarCraft Wraith completion sounds
+duke      # StarCraft Duke completion sounds
 ```
 
 Open multiple terminals with different themes to tell them apart.
 
 ## Add More Sounds
 
-The install downloads starter sounds per theme. To add variety, drop more `.mp3` files into the theme folder:
+Drop more `.mp3` files into any theme folder for variety:
 
 ```bash
-~/.claude/sounds/peon/      # Add Warcraft orc completion sounds here
-~/.claude/sounds/scv/       # Add StarCraft SCV completion sounds here
-~/.claude/sounds/marine/    # Add StarCraft Marine completion sounds here
-~/.claude/sounds/raynor/    # Add StarCraft Raynor completion sounds here
-~/.claude/sounds/wraith/    # Add StarCraft Wraith completion sounds here
+~/.claude/sounds/peon/      # Warcraft orc sounds
+~/.claude/sounds/scv/       # StarCraft SCV sounds
+~/.claude/sounds/marine/    # StarCraft Marine sounds
+~/.claude/sounds/raynor/    # StarCraft Raynor sounds
+~/.claude/sounds/wraith/    # StarCraft Wraith sounds
+~/.claude/sounds/duke/      # StarCraft Duke sounds
 ```
 
 You can ask your AI agent to help find and download more sounds:
