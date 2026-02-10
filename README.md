@@ -19,7 +19,8 @@ bash install.sh --all    # all themes
 
 | Command | Theme | Sounds | Category |
 |---------|-------|--------|----------|
-| `peon` | Warcraft Orc worker | "work complete" | Core |
+| `peon` | Warcraft Orc Peon | "work work" | Core |
+| `peasant` | Warcraft Human Peasant | "jobs done" | Core |
 | `scv` | StarCraft Terran SCV | "good to go sir" | Core |
 | `raynor` | StarCraft Jim Raynor | "any time you're ready", "go ahead commander" | Extra |
 | `wraith` | StarCraft Terran Wraith | "awaiting launch orders", "standing by" | Extra |
@@ -32,8 +33,9 @@ Extra themes are installed with `--all`.
 Use a themed command instead of `claude`:
 
 ```bash
-peon       # Warcraft orc completion sounds
-scv        # StarCraft SCV completion sounds
+peon       # Warcraft Peon — "work work"
+peasant    # Warcraft Peasant — "jobs done"
+scv        # StarCraft SCV — "good to go sir"
 raynor     # StarCraft Raynor completion sounds
 wraith     # StarCraft Wraith completion sounds
 duke       # StarCraft Duke completion sounds
@@ -42,9 +44,9 @@ duke       # StarCraft Duke completion sounds
 Run multiple terminals with different themes to tell your agents apart:
 
 ```
-Terminal 1 $ peon       # deep "work complete"
-Terminal 2 $ scv        # brisk "good to go sir"
-Terminal 3 $ raynor     # drawled "go ahead commander"
+Terminal 1 $ peon       # grunted "work work"
+Terminal 2 $ peasant    # cheerful "jobs done"
+Terminal 3 $ scv        # brisk "good to go sir"
 ```
 
 ## How It Works

@@ -22,7 +22,7 @@ Options:
   --version    Print version and exit
   --help       Show this help message
 
-Core themes:  peon, scv
+Core themes:  peon, peasant, scv
 Extra themes: raynor, wraith, duke
 
 More info: https://github.com/kearnsw/agent-sounds
@@ -99,18 +99,22 @@ echo "Installing Claude Code sound themes..."
 echo ""
 
 if [ "$INSTALL_ALL" = true ]; then
-  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/scv" "$SOUNDS_DIR/raynor" "$SOUNDS_DIR/wraith" "$SOUNDS_DIR/duke"
+  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/peasant" "$SOUNDS_DIR/scv" "$SOUNDS_DIR/raynor" "$SOUNDS_DIR/wraith" "$SOUNDS_DIR/duke"
 else
-  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/scv"
+  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/peasant" "$SOUNDS_DIR/scv"
 fi
 
 # --- Core themes ---
 
 echo "Core themes:"
 
-echo "  peon (Warcraft Orc worker)"
-curl -sf --max-time 15 -o "$SOUNDS_DIR/peon/work-complete.mp3" \
-  "$SFX_BASE/warcraft-2/8d82b5_Warcraft_2_Peon_Work_Complete_Sound_Effect.mp3" && echo "    work-complete.mp3" || echo "    FAILED: work-complete.mp3"
+echo "  peon (Warcraft Orc Peon)"
+curl -sf --max-time 15 -o "$SOUNDS_DIR/peon/work-work.mp3" \
+  "https://www.myinstants.com/media/sounds/wc3-peon-says-work-work-only-.mp3" && echo "    work-work.mp3" || echo "    FAILED: work-work.mp3"
+
+echo "  peasant (Warcraft Human Peasant)"
+curl -sf --max-time 15 -o "$SOUNDS_DIR/peasant/jobs-done.mp3" \
+  "https://www.myinstants.com/media/sounds/jobs-done_1.mp3" && echo "    jobs-done.mp3" || echo "    FAILED: jobs-done.mp3"
 
 echo "  scv (StarCraft Terran SCV)"
 curl -sf --max-time 15 -o "$SOUNDS_DIR/scv/good-to-go-sir.mp3" \
@@ -198,6 +202,7 @@ if [ -n "$SHELL_RC" ] && [ -f "$SHELL_RC" ]; then
 
 # Claude Code sound themes (plays themed sounds on stop)
 function peon { echo "peon" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=peon claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
+function peasant { echo "peasant" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=peasant claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function scv { echo "scv" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=scv claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function raynor { echo "raynor" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=raynor claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function wraith { echo "wraith" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=wraith claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
@@ -208,6 +213,7 @@ EOF
 
 # Claude Code sound themes (plays themed sounds on stop)
 function peon { echo "peon" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=peon claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
+function peasant { echo "peasant" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=peasant claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function scv { echo "scv" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=scv claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 EOF
     fi
@@ -225,8 +231,8 @@ for dir in "$SOUNDS_DIR"/*/; do
 done
 echo ""
 if [ "$INSTALL_ALL" = true ]; then
-  echo "Usage: open a new terminal and run one of: peon, scv, raynor, wraith, duke"
+  echo "Usage: open a new terminal and run one of: peon, peasant, scv, raynor, wraith, duke"
 else
-  echo "Usage: open a new terminal and run 'peon' or 'scv' instead of 'claude'"
+  echo "Usage: open a new terminal and run 'peon', 'peasant', or 'scv' instead of 'claude'"
   echo "       Re-run with --all for extra themes: raynor, wraith, duke"
 fi
