@@ -8,20 +8,20 @@ if [ "$ACTIVE" = "true" ]; then
   exit 0
 fi
 
-# Read theme from session file, fall back to env var, then default to peon
+# Read theme from session file, fall back to env var, or exit silently
 if [ -f "/tmp/claude-sound-theme-$PPID" ]; then
   THEME=$(cat "/tmp/claude-sound-theme-$PPID")
 elif [ -n "$CLAUDE_SOUND_THEME" ]; then
   THEME="$CLAUDE_SOUND_THEME"
 else
-  THEME="peon"
+  exit 0
 fi
 
 SOUNDS_DIR="$HOME/.claude/sounds/$THEME"
 
-# Fall back to peon if theme dir doesn't exist
+# Exit if theme dir doesn't exist
 if [ ! -d "$SOUNDS_DIR" ]; then
-  SOUNDS_DIR="$HOME/.claude/sounds/peon"
+  exit 0
 fi
 
 SOUNDS=("$SOUNDS_DIR"/*.mp3)
