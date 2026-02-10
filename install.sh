@@ -18,7 +18,7 @@ echo "Installing Claude Code sound themes..."
 echo ""
 
 if [ "$INSTALL_ALL" = true ]; then
-  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/scv" "$SOUNDS_DIR/marine" "$SOUNDS_DIR/raynor" "$SOUNDS_DIR/wraith" "$SOUNDS_DIR/duke"
+  mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/scv" "$SOUNDS_DIR/raynor" "$SOUNDS_DIR/wraith" "$SOUNDS_DIR/duke"
 else
   mkdir -p "$SOUNDS_DIR/peon" "$SOUNDS_DIR/scv"
 fi
@@ -41,15 +41,6 @@ if [ "$INSTALL_ALL" = true ]; then
   echo ""
   echo "Installing extra themes..."
 
-  # Download Marine sounds (StarCraft Terran Marine)
-  echo "Downloading marine theme (StarCraft Terran Marine)..."
-  curl -sf --max-time 15 -o "$SOUNDS_DIR/marine/jacked-up-and-good-to-go.mp3" \
-    "$SFX_BASE/starcraft/8d82b5_SC_Marine_Jacked_Up_And_Good_To_Go_Sound_Effect.mp3" && echo "  jacked-up-and-good-to-go.mp3" || echo "  FAILED: jacked-up-and-good-to-go.mp3"
-  curl -sf --max-time 15 -o "$SOUNDS_DIR/marine/outstanding.mp3" \
-    "$SFX_BASE/starcraft/8d82b5_StarCraft_Marine_Outstanding_Sound_Effect.mp3" && echo "  outstanding.mp3" || echo "  FAILED: outstanding.mp3"
-  curl -sf --max-time 15 -o "$SOUNDS_DIR/marine/ah-thats-the-stuff.mp3" \
-    "$SFX_BASE/starcraft/8d82b5_StarCraft_Marine_Ah_Thats_The_Stuff_Sound_Effect.mp3" && echo "  ah-thats-the-stuff.mp3" || echo "  FAILED: ah-thats-the-stuff.mp3"
-
   # Download Raynor sounds (StarCraft Jim Raynor)
   echo "Downloading raynor theme (StarCraft Jim Raynor)..."
   curl -sf --max-time 15 -o "$SOUNDS_DIR/raynor/any-time-youre-ready.mp3" \
@@ -70,8 +61,6 @@ if [ "$INSTALL_ALL" = true ]; then
     "$SFX_BASE/starcraft/8d82b5_StarCraft_Duke_Should_Work_Sound_Effect.mp3" && echo "  should-work.mp3" || echo "  FAILED: should-work.mp3"
   curl -sf --max-time 15 -o "$SOUNDS_DIR/duke/alright-then.mp3" \
     "$SFX_BASE/starcraft/8d82b5_StarCraft_Duke_Alright_Then_Sound_Effect.mp3" && echo "  alright-then.mp3" || echo "  FAILED: alright-then.mp3"
-  curl -sf --max-time 15 -o "$SOUNDS_DIR/duke/decisive-action.mp3" \
-    "$SFX_BASE/starcraft/8d82b5_StarCraft_Duke_Decisive_Action_Sound_Effect.mp3" && echo "  decisive-action.mp3" || echo "  FAILED: decisive-action.mp3"
 fi
 
 # Install play-random.sh
@@ -133,7 +122,6 @@ if [ -n "$SHELL_RC" ] && [ -f "$SHELL_RC" ]; then
 # Claude Code sound themes (plays themed sounds on stop)
 function peon { echo "peon" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=peon claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function scv { echo "scv" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=scv claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
-function marine { echo "marine" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=marine claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function raynor { echo "raynor" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=raynor claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function wraith { echo "wraith" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=wraith claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
 function duke { echo "duke" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=duke claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
@@ -163,8 +151,8 @@ echo "TIP: Add more .mp3 files to ~/.claude/sounds/<theme>/ for variety."
 echo "     Ask your AI agent to find and download more completion sounds!"
 echo ""
 if [ "$INSTALL_ALL" = true ]; then
-  echo "Usage: Open a new terminal and run one of: peon, scv, marine, raynor, wraith, duke"
+  echo "Usage: Open a new terminal and run one of: peon, scv, raynor, wraith, duke"
 else
   echo "Usage: Open a new terminal and run 'peon' or 'scv' instead of 'claude'"
-  echo "       Re-run with --all for extra themes: marine, raynor, wraith, duke"
+  echo "       Re-run with --all for extra themes: raynor, wraith, duke"
 fi

@@ -15,10 +15,9 @@ Themed completion sounds for [Claude Code](https://claude.ai/code). Plays a rand
 
 | Command | Theme | Sounds |
 |---------|-------|--------|
-| `marine` | StarCraft Terran Marine | "jacked up and good to go", "outstanding", "ah that's the stuff" |
 | `raynor` | StarCraft Jim Raynor | "any time you're ready", "go ahead commander" |
 | `wraith` | StarCraft Terran Wraith | "awaiting launch orders", "standing by" |
-| `duke` | StarCraft Edmund Duke | "should work", "alright then", "decisive action" |
+| `duke` | StarCraft Edmund Duke | "should work", "alright then" |
 
 ## Install
 
@@ -41,7 +40,6 @@ Instead of running `claude`, use a themed command:
 ```bash
 peon      # Warcraft orc completion sounds
 scv       # StarCraft SCV completion sounds
-marine    # StarCraft Marine completion sounds
 raynor    # StarCraft Raynor completion sounds
 wraith    # StarCraft Wraith completion sounds
 duke      # StarCraft Duke completion sounds
@@ -56,7 +54,6 @@ Drop more `.mp3` files into any theme folder for variety:
 ```bash
 ~/.claude/sounds/peon/      # Warcraft orc sounds
 ~/.claude/sounds/scv/       # StarCraft SCV sounds
-~/.claude/sounds/marine/    # StarCraft Marine sounds
 ~/.claude/sounds/raynor/    # StarCraft Raynor sounds
 ~/.claude/sounds/wraith/    # StarCraft Wraith sounds
 ~/.claude/sounds/duke/      # StarCraft Duke sounds
