@@ -63,13 +63,13 @@ if [ "$UNINSTALL" = true ]; then
   fi
 
   # Remove stop hook from settings.json
-  if [ -f "$SETTINGS_FILE" ] && grep -q "play-random.sh" "$SETTINGS_FILE"; then
+  if [ -f "$SETTINGS_FILE" ] && grep -qE "play-(sound|random).sh" "$SETTINGS_FILE"; then
     if command -v jq &> /dev/null; then
       tmp=$(mktemp)
-      jq 'del(.hooks.Stop)' "$SETTINGS_FILE" > "$tmp" && mv "$tmp" "$SETTINGS_FILE"
-      echo "  Removed stop hook from $SETTINGS_FILE"
+      jq 'del(.hooks.Stop, .hooks.Notification)' "$SETTINGS_FILE" > "$tmp" && mv "$tmp" "$SETTINGS_FILE"
+      echo "  Removed hooks from $SETTINGS_FILE"
     else
-      echo "  WARNING: jq not found. Manually remove the Stop hook from $SETTINGS_FILE"
+      echo "  WARNING: jq not found. Manually remove the Stop and Notification hooks from $SETTINGS_FILE"
     fi
   else
     echo "  No stop hook found in settings (skipped)"
@@ -145,23 +145,26 @@ if [ "$INSTALL_ALL" = true ]; then
     "$SFX_BASE/starcraft/8d82b5_StarCraft_Duke_Alright_Then_Sound_Effect.mp3" && echo "    alright-then.mp3" || echo "    FAILED: alright-then.mp3"
 fi
 
-# Install play-random.sh
-cp "$SCRIPT_DIR/play-random.sh" "$SOUNDS_DIR/play-random.sh"
-chmod +x "$SOUNDS_DIR/play-random.sh"
+# Install play-sound.sh
+cp "$SCRIPT_DIR/play-sound.sh" "$SOUNDS_DIR/play-sound.sh"
+chmod +x "$SOUNDS_DIR/play-sound.sh"
 
 # Add stop hook to settings.json
 echo ""
 if [ -f "$SETTINGS_FILE" ]; then
-  if grep -q "play-random.sh" "$SETTINGS_FILE"; then
-    echo "Stop hook already configured."
+  if grep -q "play-sound.sh" "$SETTINGS_FILE"; then
+    echo "Hooks already configured."
   else
     if command -v jq &> /dev/null; then
       tmp=$(mktemp)
-      jq '.hooks.Stop = [{"hooks": [{"type": "command", "command": "bash ~/.claude/sounds/play-random.sh"}]}]' "$SETTINGS_FILE" > "$tmp" && mv "$tmp" "$SETTINGS_FILE"
-      echo "Added stop hook to settings.json."
+      jq '
+        .hooks.Stop = [{"hooks": [{"type": "command", "command": "bash ~/.claude/sounds/play-sound.sh"}]}]
+        | .hooks.Notification = [{"matcher": "permission_prompt", "hooks": [{"type": "command", "command": "bash ~/.claude/sounds/play-sound.sh"}]}]
+      ' "$SETTINGS_FILE" > "$tmp" && mv "$tmp" "$SETTINGS_FILE"
+      echo "Added hooks to settings.json."
     else
       echo "WARNING: jq not found. Manually add this to $SETTINGS_FILE:"
-      echo '  "hooks": { "Stop": [{ "hooks": [{ "type": "command", "command": "bash ~/.claude/sounds/play-random.sh" }] }] }'
+      echo '  "hooks": { "Stop": [...], "Notification": [{"matcher": "permission_prompt", "hooks": [...]}] }'
     fi
   fi
 else
@@ -174,7 +177,18 @@ else
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/sounds/play-random.sh"
+            "command": "bash ~/.claude/sounds/play-sound.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/sounds/play-sound.sh"
           }
         ]
       }
@@ -182,7 +196,7 @@ else
   }
 }
 EOF
-  echo "Created settings.json with stop hook."
+  echo "Created settings.json with hooks."
 fi
 
 # Detect shell and add functions

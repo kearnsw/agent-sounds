@@ -1,6 +1,6 @@
 # Agent Sounds
 
-Completion sounds for [Claude Code](https://claude.ai/code). Each theme plays a random sound when your agent finishes — run different themes per terminal to tell them apart by ear.
+Completion sounds for [Claude Code](https://claude.ai/code). Each theme plays a random sound when your agent finishes or needs input — run different themes per terminal to tell them apart by ear.
 
 ## Quick Start
 
@@ -51,9 +51,9 @@ Terminal 3 $ scv        # brisk "good to go sir"
 
 ## How It Works
 
-1. `install.sh` registers a Claude Code [stop hook](https://docs.anthropic.com/en/docs/claude-code/hooks) in `~/.claude/settings.json`
-2. When Claude finishes a response, the hook runs `play-random.sh`
-3. `play-random.sh` reads the active theme, picks a random `.mp3`, and plays it with `afplay`
+1. `install.sh` registers Claude Code [hooks](https://docs.anthropic.com/en/docs/claude-code/hooks) in `~/.claude/settings.json`
+2. When Claude finishes a response or needs permission, the hook runs `play-sound.sh`
+3. `play-sound.sh` reads the active theme, picks a random `.mp3`, and plays it with `afplay`
 
 Theme is resolved from: session temp file > `CLAUDE_SOUND_THEME` env var > default (`peon`).
 
@@ -87,7 +87,7 @@ Or manually:
 
 ```bash
 rm -rf ~/.claude/sounds/
-# Remove the Stop hook from ~/.claude/settings.json
+# Remove the Stop and Notification hooks from ~/.claude/settings.json
 # Remove theme functions from ~/.zshrc or ~/.bashrc
 ```
 
