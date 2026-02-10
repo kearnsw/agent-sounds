@@ -5,10 +5,10 @@ Completion sounds for [Claude Code](https://claude.ai/code). Each theme plays a 
 ## Quick Start
 
 ```bash
-# Homebrew
+# Homebrew (installs core themes automatically)
 brew install kearnsw/tap/agent-sounds
 
-# or clone and install
+# or clone and install manually
 git clone https://github.com/kearnsw/agent-sounds.git
 cd agent-sounds
 bash install.sh          # core themes only
