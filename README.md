@@ -1,69 +1,72 @@
-# Agent Sound Stop Hooks
+# Agent Sounds
 
-Themed completion sounds for [Claude Code](https://claude.ai/code). Plays a random sound when your agent finishes a response. Use different themes per terminal so you can tell them apart by ear.
+Completion sounds for [Claude Code](https://claude.ai/code). Each theme plays a random sound when your agent finishes — run different themes per terminal to tell them apart by ear.
+
+## Quick Start
+
+```bash
+# Homebrew
+brew install kearnsw/tap/agent-sounds
+
+# or clone and install
+git clone https://github.com/kearnsw/agent-sounds.git
+cd agent-sounds
+bash install.sh          # core themes only
+bash install.sh --all    # all themes
+```
 
 ## Themes
 
-### Core
+| Command | Theme | Sounds | Category |
+|---------|-------|--------|----------|
+| `peon` | Warcraft Orc worker | "work complete" | Core |
+| `scv` | StarCraft Terran SCV | "good to go sir" | Core |
+| `raynor` | StarCraft Jim Raynor | "any time you're ready", "go ahead commander" | Extra |
+| `wraith` | StarCraft Terran Wraith | "awaiting launch orders", "standing by" | Extra |
+| `duke` | StarCraft Edmund Duke | "should work", "alright then" | Extra |
 
-| Command | Theme | Sounds |
-|---------|-------|--------|
-| `peon` | Warcraft Orc worker | "work complete" |
-| `scv` | StarCraft Terran SCV | "good to go sir" |
-
-### Extra (`--all`)
-
-| Command | Theme | Sounds |
-|---------|-------|--------|
-| `raynor` | StarCraft Jim Raynor | "any time you're ready", "go ahead commander" |
-| `wraith` | StarCraft Terran Wraith | "awaiting launch orders", "standing by" |
-| `duke` | StarCraft Edmund Duke | "should work", "alright then" |
-
-## Install
-
-```bash
-git clone https://github.com/kearnsw/agent-sound-stop-hooks.git
-cd agent-sound-stop-hooks
-bash install.sh        # core themes (peon, scv)
-bash install.sh --all  # all themes
-```
-
-This will:
-- Download sound files to `~/.claude/sounds/`
-- Add a Stop hook to `~/.claude/settings.json`
-- Add shell functions to your `.zshrc` or `.bashrc`
+Extra themes are installed with `--all`.
 
 ## Usage
 
-Instead of running `claude`, use a themed command:
+Use a themed command instead of `claude`:
 
 ```bash
-peon      # Warcraft orc completion sounds
-scv       # StarCraft SCV completion sounds
-raynor    # StarCraft Raynor completion sounds
-wraith    # StarCraft Wraith completion sounds
-duke      # StarCraft Duke completion sounds
+peon       # Warcraft orc completion sounds
+scv        # StarCraft SCV completion sounds
+raynor     # StarCraft Raynor completion sounds
+wraith     # StarCraft Wraith completion sounds
+duke       # StarCraft Duke completion sounds
 ```
 
-Open multiple terminals with different themes to tell them apart.
+Run multiple terminals with different themes to tell your agents apart:
 
-## Add More Sounds
+```
+Terminal 1 $ peon       # deep "work complete"
+Terminal 2 $ scv        # brisk "good to go sir"
+Terminal 3 $ raynor     # drawled "go ahead commander"
+```
 
-Drop more `.mp3` files into any theme folder for variety:
+## How It Works
+
+1. `install.sh` registers a Claude Code [stop hook](https://docs.anthropic.com/en/docs/claude-code/hooks) in `~/.claude/settings.json`
+2. When Claude finishes a response, the hook runs `play-random.sh`
+3. `play-random.sh` reads the active theme, picks a random `.mp3`, and plays it with `afplay`
+
+Theme is resolved from: session temp file > `CLAUDE_SOUND_THEME` env var > default (`peon`).
+
+## Customization
+
+### Add sounds to an existing theme
+
+Drop `.mp3` files into any theme folder:
 
 ```bash
-~/.claude/sounds/peon/      # Warcraft orc sounds
-~/.claude/sounds/scv/       # StarCraft SCV sounds
-~/.claude/sounds/raynor/    # StarCraft Raynor sounds
-~/.claude/sounds/wraith/    # StarCraft Wraith sounds
-~/.claude/sounds/duke/      # StarCraft Duke sounds
+ls ~/.claude/sounds/peon/    # see existing sounds
+cp my-sound.mp3 ~/.claude/sounds/peon/
 ```
 
-You can ask your AI agent to help find and download more sounds:
-
-> "Download more StarCraft Marine completion sound effects as mp3 files into ~/.claude/sounds/marine/"
-
-## Create Your Own Theme
+### Create your own theme
 
 1. Create a folder: `mkdir ~/.claude/sounds/mytheme`
 2. Add `.mp3` files to it
@@ -72,8 +75,26 @@ You can ask your AI agent to help find and download more sounds:
    function mytheme { echo "mytheme" > "/tmp/claude-sound-theme-$$" && CLAUDE_SOUND_THEME=mytheme claude "$@"; rm -f "/tmp/claude-sound-theme-$$"; }
    ```
 
+## Uninstall
+
+```bash
+bash install.sh --uninstall
+```
+
+Or manually:
+
+```bash
+rm -rf ~/.claude/sounds/
+# Remove the Stop hook from ~/.claude/settings.json
+# Remove theme functions from ~/.zshrc or ~/.bashrc
+```
+
 ## Requirements
 
 - macOS (uses `afplay` for audio playback)
-- `jq` (for install script to patch settings.json)
+- `jq` (for patching `settings.json` during install)
 - [Claude Code](https://claude.ai/code)
+
+## License
+
+[MIT](LICENSE)
