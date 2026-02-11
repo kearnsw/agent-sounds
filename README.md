@@ -2,6 +2,10 @@
 
 Completion sounds for [Claude Code](https://claude.ai/code). Each theme plays a random sound when your agent finishes or needs input — run different themes per terminal to tell them apart by ear.
 
+
+https://github.com/user-attachments/assets/be989bd0-e5fb-49d4-98d7-19b7874ccd90
+
+
 ## Quick Start
 
 ```bash
